@@ -1,0 +1,11 @@
+name: Check installer and configuration
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check syntax and exercise installation in a disposable container
+        run: docker run --rm -v "$PWD:/repo:ro" ubuntu:26.04 bash /repo/tests/integration.sh
